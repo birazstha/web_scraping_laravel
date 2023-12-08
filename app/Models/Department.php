@@ -10,4 +10,9 @@ class Department extends Model
     use HasFactory;
     public $guarded = ['id'];
     public $table = 'departments';
+
+    public function staffs()
+    {
+        return $this->hasMany(Staff::class);
+    }
 }

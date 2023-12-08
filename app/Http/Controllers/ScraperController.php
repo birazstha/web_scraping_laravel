@@ -25,7 +25,11 @@ class ScraperController extends Controller
 
     public function scrapper()
     {
-        $staffs = $this->staff->get();
-        return view('scrapper', compact('staffs'));
+        $data = [
+            'departments' => $this->department->get(),
+            'staffs' => $this->staff->get()
+        ];
+
+        return view('scrapper', $data);
     }
 }
