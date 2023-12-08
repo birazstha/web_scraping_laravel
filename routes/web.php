@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('scrap-data');
+    return redirect()->route('scrap');
 });
 
-Route::get('scrap-data', [ScraperController::class, 'scrapper'])->name('scrap-data');
+Route::get('/', [ScraperController::class, 'scrapper'])->name('scrap');
+Route::get('/scrap-data', [ScraperController::class, 'scrapData'])->name('scrap-data');
+Route::get('/staff-filter', [ScraperController::class, 'filterStaff'])->name('staff.filter');
