@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('scrap-data');
 });
 
 Route::get('scrap-data', [ScraperController::class, 'scrapper'])->name('scrap-data');

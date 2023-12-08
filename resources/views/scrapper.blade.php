@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-    <title>Staff Photo Gallery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+
+
+<title>Staff Photo Gallery</title>
 </head>
 
 <body>
@@ -15,47 +21,56 @@
         <h1>Staff Lists</h1>
     </nav>
 
+    <div class="filters">
+        <label for="department">Select Department:</label>
+        <select id="department">
+            <option value="all">All Departments</option>
+            <!-- Add options dynamically based on your data -->
+        </select>
+
+        <label for="designation">Select Designation:</label>
+        <select id="designation">
+            <option value="all">All Designations</option>
+            <!-- Add options dynamically based on your data -->
+        </select>
+
+        <button class=" btn btn-success">Apply Filters</button>
+    </div>
 
     <div class="gallery">
         @foreach ($staffs as $staff)
-            <div class="staff">
+            <div class="staff" data-department="{{ $staff->department->title }}"
+                data-designation="{{ $staff->designation->title }}">
                 <div class="staff__image">
-                    <img src="{{ $staff->image }}" alt="Staff 1">
+                    <img src="{{ $staff->image }}" alt="{{ $staff->name }}">
                 </div>
                 <div class="details">
-                    <h3>{{ $staff->name }}</h3>
-                    <p>{{ $staff->designation->title }}</p>
+                    <h5>{{ $staff->name }}</h5>
+                    <p class="designation">{{ $staff->designation->title }}</p>
                     <p>{{ $staff->department->title }}</p>
                 </div>
             </div>
         @endforeach
     </div>
 
-    {{-- <div class="gallery">
-        <div class="staff">
-            <div class="staff__image">
-                <img src="{{ asset('test.jpg') }}" alt="Staff 1">
-            </div>
-            <div class="details">
-                <h3>John Doe</h3>
-                <p>Manager</p>
-                <p>Human Resources</p>
-            </div>
-        </div>
+    <script>
+        function filterStaff() {
+            var departmentFilter = document.getElementById('department').value;
+            var designationFilter = document.getElementById('designation').value;
 
-        <div class="staff">
-            <div class="staff__image">
-                <img src="{{ asset('test.jpg') }}" alt="Staff 1">
-            </div>
-            <div class="details">
-                <h3>John Doe</h3>
-                <p>Manager</p>
-                <p>Private Secretariat of the Honorable Minister</p>
-            </div>
-        </div>
-    </div> --}}
+            var staffElements = document.querySelectorAll('.staff');
 
+            staffElements.forEach(function(staffElement) {
+                var department = staffElement.getAttribute('data-department');
+                var designation = staffElement.getAttribute('data-designation');
 
+                var show = (departmentFilter === 'all' || department === departmentFilter) &&
+                    (designationFilter === 'all' || designation === designationFilter);
+
+                staffElement.style.display = show ? 'block' : 'none';
+            });
+        }
+    </script>
 
 </body>
 
