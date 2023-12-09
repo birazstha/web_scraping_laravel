@@ -1,29 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('master')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-
-
-
-<title>Staff Photo Gallery</title>
-</head>
-
-<body>
-    <nav>
-        <h1>Staff Lists</h1>
-    </nav>
-
-    @include('filter')
-
+@section('content')
     <h2 class="department">{{ $departmentTitle }}</h2>
     <hr>
+    @error('msg')
+        <div class="alert alert-danger text-center m-3" role="alert">
+            {{ $message }}
+        </div>
+    @enderror
+
     <div class="gallery">
         @forelse ($staffs as $staff)
             <div class="staff" data-department="{{ $staff->department->title }}"
@@ -34,15 +19,15 @@
                 <div class="details">
                     <h5>{{ $staff->name }}</h5>
                     <p class="designation">{{ $staff->designation->title }}</p>
-                    {{-- <p>{{ $staff->department->title }}</p> --}}
+                    <p>
+                        {!! $staff->email ? '<a href="mailto:' . $staff->email . '" class="email">' . $staff->email . '</a>' : 'N/A' !!}
+                    </p>
+                    <p class="">{{ $staff->phone ?? 'N/A' }}</p>
+                    </p>
                 </div>
             </div>
         @empty
             <p>No Data Found</p>
         @endforelse
     </div>
-
-
-</body>
-
-</html>
+@endsection

@@ -19,6 +19,5 @@ Route::get('/', function () {
 });
 
 Route::get('/', [ScraperController::class, 'scrapper'])->name('scrap');
-Route::get('/scrap-data', [ScraperController::class, 'scrapData'])->name('scrap-data');
 Route::get('/staff-filter', [ScraperController::class, 'filterStaff'])->name('staff.filter');
 Route::get('/export', [ScraperController::class, 'export'])->name('export');

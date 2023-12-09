@@ -37,14 +37,14 @@
 
             {{-- Action Buttons --}}
             <div class="col-md-3 buttons">
-                <button type="submit" class="btn btn-success m-1">Filter</button>
-                <a href="{{ route('scrap') }}" class="btn btn-primary m-1">Reset</a>
+                <button type="submit" class="btn btn-success btn-sm m-1">
+                    <i class="fas fa-magnifying-glass"></i>
+                    Filter</button>
                 <a href="{{ route('export', ['department_id' => request()->department_id, 'designation_id' => request()->designation_id, 'name' => request()->name]) }}"
-                    class="btn btn-warning m-1">Export</a>
-
+                    class="btn btn-warning btn-sm m-1"><i class="fas fa-file-excel"></i> Export</a>
+                <a href="{{ route('scrap') }}" class="btn btn-primary btn-sm m-1"><i class="fas fa-recycle"></i>
+                    Reset</a>
             </div>
-
-
         </div>
 
     </div>

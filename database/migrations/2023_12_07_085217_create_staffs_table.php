@@ -11,9 +11,11 @@ return new class extends Migration
         Schema::create('staffs', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('designation_id')->nullable();
-            $table->text('department_id')->nullable();
+            $table->string('designation_id');
+            $table->text('department_id');
             $table->string('image')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
         });
     }
