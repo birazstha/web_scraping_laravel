@@ -2,9 +2,6 @@
     <div class="filters">
 
         <div class="row">
-
-
-
             {{-- Department --}}
             <div class="col-md-3">
                 <label for="department">Department:</label>
@@ -40,9 +37,14 @@
 
             {{-- Action Buttons --}}
             <div class="col-md-3 buttons">
-                <button type="submit" class="btn btn-success m-2">Filter</button>
-                <a href="{{ route('scrap') }}" class="btn btn-primary">Reset</a>
+                <button type="submit" class="btn btn-success m-1">Filter</button>
+                <a href="{{ route('scrap') }}" class="btn btn-primary m-1">Reset</a>
+                <a href="{{ route('export', ['department_id' => request()->department_id, 'designation_id' => request()->designation_id, 'name' => request()->name]) }}"
+                    class="btn btn-warning m-1">Export</a>
+
             </div>
+
+
         </div>
 
     </div>

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\StaffDataExport;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\Staff;
 use Goutte\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ScraperController extends Controller
 {
@@ -98,12 +100,12 @@ class ScraperController extends Controller
     }
 
 
-
     public function filterStaff(Request $request)
     {
-        $designationId = $request->designation_id;
-        $departmentId = $request->department_id;
-        $staffName = $request->name;
+
+        $designationId = $request->designation_id ??  request()->query('designation_id');
+        $departmentId = $request->department_id ?? request()->query('department_id');
+        $staffName = $request->name ??  request()->query('name');
 
         $staffQuery = $this->staff;
 
@@ -119,6 +121,7 @@ class ScraperController extends Controller
             })
             ->get();
 
+
         $data = [
             'staffs' => $staffs,
             'departments' => $this->department->get(),
@@ -126,6 +129,16 @@ class ScraperController extends Controller
             'departmentTitle' => $this->department->where('id', $departmentId)->value('title') ?? ''
         ];
 
+        if ($request->isExport) {
+            return $data['staffs'];
+        }
+
         return view('result', $data);
+    }
+
+    public function export(Request $request)
+    {
+        $exportData = $this->filterStaff($request->merge(['isExport' => true]));
+        return Excel::download(new StaffDataExport($exportData), 'staff_data.xlsx');
     }
 }
