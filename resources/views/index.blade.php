@@ -16,10 +16,10 @@
                         <h5>{{ $staff->name }}</h5>
                         <p class="designation">{{ $staff->designation->title }}</p>
                         <p>
-                            {!! $staff->email ? '<a href="mailto:' . $staff->email . '" class="email">' . $staff->email . '</a>' : 'N/A' !!}
+                            {!! $staff->email ? '<a href="mailto:' . $staff->email . '" class="email">' . $staff->email . '</a>' : 'NA' !!}
 
                         </p>
-                        <p class="">{{ $staff->phone ?? 'N/A' }}</p>
+                        <p class="">{{ $staff->phone ?? 'NA' }}</p>
                         </p>
                     </div>
                 </div>

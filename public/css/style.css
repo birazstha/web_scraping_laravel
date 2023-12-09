@@ -14,6 +14,27 @@ hr {
     /* Adjust the values as needed */
 }
 
+.main {
+    padding: 2rem;
+}
+
+
+.filters {
+    display: flex;
+    /* justify-content: center; */
+    padding: 1rem;
+    margin: 10px;
+    background-color: #cbdeee;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
+}
+
 .details .email {
     text-decoration: none;
     color: #0074c9;
@@ -84,19 +105,4 @@ p {
     padding: 10px;
     width: 100%;
     background-color: white;
-}
-
-.filters {
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-    margin: 50px 20px 20px 20px;
-    background-color: #cbdeee;
-    border-radius: 5px;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

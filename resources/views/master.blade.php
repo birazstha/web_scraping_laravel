@@ -22,7 +22,7 @@
         <h1>All Staffs</h1>
     </nav>
 
-    <div class="container">
+    <div class="main">
         @include('filter')
         @yield('content')
     </div>

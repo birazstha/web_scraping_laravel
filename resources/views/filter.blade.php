@@ -1,9 +1,9 @@
 <form action="{{ route('staff.filter') }}" method="get">
     <div class="filters">
 
-        <div class="row">
+        <div class="row w-100">
             {{-- Department --}}
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <label for="department">Department:</label>
                 <select id="department" class="form-select form-select mb-3" name="department_id">
                     <option value="">--Select Department--</option>
@@ -16,7 +16,7 @@
             </div>
 
             {{-- Designation --}}
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <label for="department">Designation:</label>
                 <select id="department" class="form-select form-select mb-3" name="designation_id">
                     <option value="">--Select Designation</option>
@@ -29,14 +29,14 @@
             </div>
 
             {{-- Name --}}
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <label for="department">Name:</label>
                 <input type="text" class="form-control" name="name" placeholder="Enter Name"
                     value="{{ request()->name ?? '' }}">
             </div>
 
             {{-- Action Buttons --}}
-            <div class="col-md-3 buttons">
+            <div class="col-lg-3 buttons">
                 <button type="submit" class="btn btn-success btn-sm m-1">
                     <i class="fas fa-magnifying-glass"></i>
                     Filter</button>
