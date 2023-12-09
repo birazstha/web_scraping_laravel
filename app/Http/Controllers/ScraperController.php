@@ -43,17 +43,16 @@ class ScraperController extends Controller
             $crawler = $client->request('GET', $url);
 
             $staffSections = $crawler->filter('.tab-pane.fade.sub-area')->each(function ($staffSectionNode) {
-                // Scraping section title
+                // Scraping Departments
                 $sectionTitleNode = $staffSectionNode->filter('.s-title-section');
                 $sectionTitle = $sectionTitleNode->count() > 0 ? $sectionTitleNode->text() : 'Unknown Section';
 
-                // Scraping staff details within the section
+                // Scraping Staff's Name, Position, and Image.
                 $staffDetails = $staffSectionNode->filter('.single-profile')->each(function ($staffNode) {
                     $name = $staffNode->filter('.name')->text();
                     $position = $staffNode->filter('.position')->text();
                     $image = $staffNode->filter('.profile-img img')->attr('src');
 
-                    // Add the scraped data to the array
                     return [
                         'name' => $name,
                         'position' => $position,
@@ -61,7 +60,6 @@ class ScraperController extends Controller
                     ];
                 });
 
-                // Return an array containing section title and staff details
                 return [
                     'sectionTitle' => $sectionTitle,
                     'staffDetails' => $staffDetails,
@@ -69,46 +67,65 @@ class ScraperController extends Controller
             });
 
             foreach ($staffSections as $staffSection) {
-                $department = $this->department->create([
-                    'title' => $staffSection['sectionTitle']
-                ]);
+                if ($staffSection['staffDetails']) {
+                    $department = $this->department->firstOrCreate([
+                        'title' => $staffSection['sectionTitle']
+                    ]);
 
-                foreach ($staffSection['staffDetails'] as $staffDetail) {
-                    $designationExists = $this->designation->where('title', $staffDetail['position'])->first();
-                    if (!isset($designationExists)) {
-                        $designation = $this->designation->create([
+                    foreach ($staffSection['staffDetails'] as $staffDetail) {
+                        $designation = $this->designation->firstOrCreate([
                             'title' => $staffDetail['position']
                         ]);
+
+                        $staffExists = $this->staff->where([
+                            'name' => $staffDetail['name'],
+                            'designation_id' => $designation->id,
+                            'department_id' => $department->id
+                        ])->first();
+
+                        if (!$staffExists) {
+                            $this->staff->create([
+                                'name' => $staffDetail['name'],
+                                'designation_id' => $designation->id,
+                                'department_id' => $department->id,
+                                'image' => $staffDetail['image']
+                            ]);
+                        }
                     }
-                    $this->staff->create([
-                        'name' => $staffDetail['name'],
-                        'designation_id' => $designation->id,
-                        'department_id' => $department->id,
-                        'image' => $staffDetail['image']
-                    ]);
                 }
             }
         });
     }
 
+
+
     public function filterStaff(Request $request)
     {
         $designationId = $request->designation_id;
         $departmentId = $request->department_id;
-        $staffs = [];
-        if ($designationId && $departmentId) {
-            $staffs = $this->staff->where(['designation_id' => $designationId, 'department_id' => $departmentId])->get();
-        } else if ($designationId) {
-            $staffs = $this->staff->where('designation_id', $designationId)->get();
-        } else {
-            $staffs = $this->staff->where('department_id', $departmentId)->get();
-        }
+        $staffName = $request->name;
+
+        $staffQuery = $this->staff;
+
+        $staffs = $staffQuery
+            ->when($designationId, function ($query) use ($designationId) {
+                return $query->where('designation_id', $designationId);
+            })
+            ->when($departmentId, function ($query) use ($departmentId) {
+                return $query->where('department_id', $departmentId);
+            })
+            ->when($staffName, function ($query) use ($staffName) {
+                return $query->where('name', 'ILIKE', '%' . $staffName . '%');
+            })
+            ->get();
 
         $data = [
             'staffs' => $staffs,
             'departments' => $this->department->get(),
             'designations' => $this->designation->get(),
+            'departmentTitle' => $this->department->where('id', $departmentId)->value('title') ?? ''
         ];
+
         return view('result', $data);
     }
 }

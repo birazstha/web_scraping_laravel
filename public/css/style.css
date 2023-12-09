@@ -15,11 +15,7 @@ nav {
     text-align: center;
 }
 
-.filters {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px;
-}
+
 
 
 
@@ -77,4 +73,20 @@ p {
     padding: 10px;
     width: 100%;
     background-color: white;
+}
+
+.filters {
+    display: flex;
+    /* justify-content: center; */
+    padding: 1rem;
+    align-items: center;
+    margin: 20px;
+    background-color: #cbdeee;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -22,7 +22,8 @@
 
     @include('filter')
 
-
+    <h2 class="department">{{ $departmentTitle }}</h2>
+    <hr>
     <div class="gallery">
         @forelse ($staffs as $staff)
             <div class="staff" data-department="{{ $staff->department->title }}"

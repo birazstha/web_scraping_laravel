@@ -22,7 +22,7 @@
 
     @include('filter')
 
-    @foreach ($departments as $department)
+    @forelse ($departments as $department)
         <h2 class="department">{{ $department->title }}</h2>
         <hr>
         <div class="gallery">
@@ -39,11 +39,17 @@
                     </div>
                 </div>
             @empty
-                <p>No Data Found</p>
+                <div class="alert alert-danger text-center m-3" role="alert">
+                    No data found.
+                </div>
             @endforelse
         </div>
         <hr>
-    @endforeach
+    @empty
+        <div class="alert alert-danger text-center m-3" role="alert">
+            No data found.
+        </div>
+    @endforelse
 
 </body>
 
