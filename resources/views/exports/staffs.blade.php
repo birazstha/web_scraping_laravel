@@ -17,6 +17,8 @@
                 <th width="200px"> Name </th>
                 <th width="300px"> Department </th>
                 <th width="250px"> Designation </th>
+                <th width="250px"> Email </th>
+                <th width="250px"> Phone </th>
             </tr>
         </thead>
         <tbody style="background-color: #696969; vertical-align: top;">
@@ -26,6 +28,8 @@
                     <td width="200px">{{ $item->name ?? 'N/A' }}</td>
                     <td width="300px">{{ $item->department->title ?? 'N/A' }}</td>
                     <td width="250px">{{ $item->designation->title ?? 'N/A' }}</td>
+                    <td width="200px">{{ $item->email ?? 'N/A' }}</td>
+                    <td width="200px">{{ $item->phone ?? 'N/A' }}</td>
                 </tr>
             @endforeach
         </tbody>

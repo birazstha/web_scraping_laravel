@@ -16,16 +16,16 @@ class StaffDataExport implements FromView, WithStyles
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:D1')->applyFromArray([
+        $sheet->getStyle('A1:F1')->applyFromArray([
             'fill' => [
                 'fillType' => Fill::FILL_SOLID,
                 'startColor' => ['rgb' => '1ec999'],
             ],
         ]);
 
-        $sheet->getStyle('A1:D1')->getFont()->setColor(new Color(Color::COLOR_WHITE)); // White font color
+        $sheet->getStyle('A1:F1')->getFont()->setColor(new Color(Color::COLOR_WHITE)); // White font color
 
-        $sheet->getStyle('A1:D' . $sheet->getHighestRow())->applyFromArray([
+        $sheet->getStyle('A1:F' . $sheet->getHighestRow())->applyFromArray([
             'borders' => [
                 'outline' => [
                     'borderStyle' => Border::BORDER_THIN,
@@ -34,7 +34,7 @@ class StaffDataExport implements FromView, WithStyles
             ],
         ]);
 
-        $sheet->getStyle('A1:D' . $sheet->getHighestRow())->applyFromArray([
+        $sheet->getStyle('A1:F' . $sheet->getHighestRow())->applyFromArray([
             'borders' => [
                 'allBorders' => [
                     'borderStyle' => Border::BORDER_THIN,
